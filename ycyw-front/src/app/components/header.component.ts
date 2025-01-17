@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-header',
   imports: [],
   template: `
-    <h3 class="flex-auto text-bold text-lg">Cocktails</h3>
+    <h3 class="flex-auto text-bold text-lg">YCYW</h3>
     <ul>
       <li class="flex flex-row gap-16">
         <a href="#">Requêtes</a>

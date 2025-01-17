@@ -4,3 +4,51 @@ body {
   color: var(--text-color);
   background-color: #eef2ff;
 }
+
+.card {
+  background-color: white;
+  border-radius: var(--radius);
+  border: 1px solid var(--gray-200);
+}
+
+input,
+textarea {
+  border: var(--border);
+  font-family: var(--font-family);
+  border-radius: 6px;
+  padding: 12px;
+}
+
+.btn {
+  font-weight: 500;
+  cursor: pointer;
+  border: 0;
+  border-radius: var(--radius);
+  padding: 8px 16px;
+  transition: background-color 0.4s;
+  transition: color 0.2s;
+}
+
+.rounded {
+  border-radius: 100%;
+  padding: 16px 16px;
+}
+
+.btn-secondary {
+  background-color: var(--gray-200);
+  color: var(--primary);
+}
+
+.btn-secondary:hover {
+  background-color: var(--gray-300);
+}
+
+.bg-primary {
+  background-color: var(--primary);
+  color: white;
+}
+
+.bg-gray-300 {
+  background-color: var(--gray-300);
+  color: black;
+}
