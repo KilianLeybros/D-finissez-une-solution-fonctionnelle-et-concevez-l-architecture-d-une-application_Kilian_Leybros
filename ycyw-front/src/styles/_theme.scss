@@ -6,9 +6,28 @@ body {
 }
 
 .card {
+  padding: 24px;
   background-color: white;
   border-radius: var(--radius);
   border: 1px solid var(--gray-200);
+}
+
+.radius {
+  border-radius: var(--radius);
+}
+
+.active-item {
+  background-color: var(--light);
+  color: white;
+  border-radius: var(--radius);
+}
+
+.text-primary {
+  color: var(--primary);
+}
+
+.no-padding {
+  padding: 0;
 }
 
 input,

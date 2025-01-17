@@ -17,11 +17,11 @@ import { Message } from 'app/shared/interfaces';
     <ul #chatHistory class="flex-auto flex flex-col  gap-12 p-12 text-sm">
       @for(message of messages(); track $index){ @if(currentUserId() ===
       message.senderId){
-      <li class="flex justify-content-end ">
+      <li class="flex justify-content-end text-semibold">
         <div class="p-12 bg-primary">{{ message.content }}</div>
       </li>
       }@else {
-      <li class="flex">
+      <li class="flex text-semibold">
         <div class="p-12 bg-gray-300">{{ message.content }}</div>
       </li>
       } }
@@ -38,7 +38,7 @@ import { Message } from 'app/shared/interfaces';
       </button>
     </div>
   `,
-  host: { class: 'card flex flex-col flex-auto' },
+  host: { class: 'card no-padding flex flex-col flex-auto' },
   styles: `
    ul{
       border-top: 1px solid var(--gray-200);
