@@ -6,7 +6,7 @@ import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-request',
-  imports: [RequestListComponent, ChatComponent, RouterOutlet],
+  imports: [RequestListComponent, RouterOutlet],
   template: `
     <app-request-list
       [requests]="requests()"
