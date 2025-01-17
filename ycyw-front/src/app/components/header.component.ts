@@ -1,14 +1,20 @@
 import { Component } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-header',
-  imports: [],
+  imports: [RouterLink, RouterLinkActive],
   template: `
-    <h3 class="flex-auto text-bold text-lg">Cocktails</h3>
-    <ul>
-      <li class="flex flex-row gap-16">
-        <a href="#">Requêtes</a>
-        <a href="#">Connexion</a>
+    <h3 class="flex-auto text-bold text-lg"><a routerLink="/">YCYW</a></h3>
+    <ul class="flex flex-row gap-16">
+      <li>
+        <a routerLink="/requests" routerLinkActive="active-link">requêtes</a>
+      </li>
+      <li>
+        <a routerLink="/login">connexion</a>
+      </li>
+      <li>
+        <a href="#">se déconnecter</a>
       </li>
     </ul>
   `,

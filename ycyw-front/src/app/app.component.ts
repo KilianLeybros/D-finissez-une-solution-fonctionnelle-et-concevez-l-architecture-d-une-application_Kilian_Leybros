@@ -2,13 +2,24 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header.component';
 import { FooterComponent } from './components/footer.component';
+import { CustomerChatComponent } from './components/customer-chat.component';
+import { RequestComponent } from './views/request/request.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, FooterComponent],
+  imports: [
+    RouterOutlet,
+    HeaderComponent,
+    FooterComponent,
+    CustomerChatComponent,
+  ],
   template: `
     <app-header />
-    <div class="flex-auto flex flex-col"></div>
+    <div class="flex-auto flex flex-col">
+      <router-outlet />
+
+      <app-customer-chat />
+    </div>
     <app-footer />
   `,
   styles: `
