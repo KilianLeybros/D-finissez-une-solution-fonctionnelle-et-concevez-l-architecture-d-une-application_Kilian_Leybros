@@ -7,12 +7,18 @@ import { RequestComponent } from './views/request/request.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, FooterComponent, RequestComponent],
+  imports: [
+    RouterOutlet,
+    HeaderComponent,
+    FooterComponent,
+    CustomerChatComponent,
+  ],
   template: `
     <app-header />
     <div class="flex-auto flex flex-col">
-      <app-request />
-      <!--<app-customer-chat />-->
+      <router-outlet />
+
+      <app-customer-chat />
     </div>
     <app-footer />
   `,

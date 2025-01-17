@@ -22,8 +22,11 @@ ul {
 }
 
 a {
+  cursor: pointer;
   text-decoration: none;
   color: inherit;
+  padding: 6px 12px;
+  display: inline-block;
 }
 
 a:hover {

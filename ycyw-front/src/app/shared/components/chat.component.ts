@@ -13,7 +13,7 @@ import { Message } from 'app/shared/interfaces';
   selector: 'app-chat',
   imports: [FormsModule],
   template: `
-    <div class="text-bold text-primary p-12">{{ title() }}</div>
+    <div class="text-bold p-12">{{ title() }}</div>
     <ul #chatHistory class="flex-auto flex flex-col  gap-12 p-12 text-sm">
       @for(message of messages(); track $index){ @if(currentUserId() ===
       message.senderId){
