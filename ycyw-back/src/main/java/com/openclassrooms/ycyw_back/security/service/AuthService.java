@@ -50,7 +50,7 @@ public class AuthService implements IAuthService {
 
     public Customer register(RegisterInput registerInput){
         userRepository.findByEmail(registerInput.email()).ifPresent((user) -> {
-            throw new EmailAlreadyExistException("Un compte avec l'adresse email " + registerInput.email() + " existe déja");
+            throw new EmailAlreadyExistException("Adresse email déjà utilisée");
         });
         String encodedPassword = passwordEncoder.encode(registerInput.password());
         return userRepository.save(UserMapper.fromRegisterInput(registerInput, encodedPassword));
