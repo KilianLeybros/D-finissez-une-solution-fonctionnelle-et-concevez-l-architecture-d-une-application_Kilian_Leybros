@@ -75,7 +75,7 @@ import { RouterLink } from '@angular/router';
               @if(email?.hasError('required')){
               <li>L'adresse email est obligatoire</li>
               } @else if(email?.hasError('email')){
-              <li>Rentrer une adresse email valide</li>
+              <li>Rentrez une adresse email valide</li>
               }@else if(email?.hasError('maxlength')){
               <li>Adresse email trop longue</li>
               }
