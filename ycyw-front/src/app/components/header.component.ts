@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from 'app/shared/services/auth.service';
+import { Role } from 'app/shared/utils/enums/role.enum';
 
 @Component({
   selector: 'app-header',
@@ -7,15 +9,19 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   template: `
     <h3 class="flex-auto text-bold text-lg"><a routerLink="/">YCYW</a></h3>
     <ul class="flex flex-row gap-16">
+      @if(currentUserRole() === roles.ADMIN){
       <li>
         <a routerLink="/requests" routerLinkActive="active-link">requêtes</a>
       </li>
+      } @if (isLoggedin()) {
+      <li>
+        <a (click)="logout()">se déconnecter</a>
+      </li>
+      } @else if (isLoggedin() === undefined) {
       <li>
         <a routerLink="/login">connexion</a>
       </li>
-      <li>
-        <a href="#">se déconnecter</a>
-      </li>
+      }
     </ul>
   `,
   styles: `
@@ -28,4 +34,12 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
     padding: 0 16px;
   }`,
 })
-export class HeaderComponent {}
+export class HeaderComponent {
+  readonly authService = inject(AuthService);
+  readonly roles = Role;
+  isLoggedin = this.authService.isLoggedin;
+  currentUserRole = this.authService.currentUserRole;
+  public logout() {
+    this.authService.logout();
+  }
+}

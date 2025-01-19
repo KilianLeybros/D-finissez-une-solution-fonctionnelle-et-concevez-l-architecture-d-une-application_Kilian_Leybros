@@ -18,35 +18,35 @@ public class AuthExceptionHandler {
 
     @ExceptionHandler(AccessDeniedException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public String handleAccessDeniedException(AccessDeniedException exception){
-        return "Vous n'êtes pas authorisé";
+    public Error handleAccessDeniedException(AccessDeniedException exception){
+        return new Error("Vous n'êtes pas authorisé");
     }
 
     @ExceptionHandler(SignatureException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public String handleSignatureException(SignatureException exception){
-        return "Signature du token invalide";
+    public Error handleSignatureException(SignatureException exception){
+        return new Error("Signature du token invalide");
     }
 
     @ExceptionHandler(ExpiredJwtException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public String handleExpiredJwtException(ExpiredJwtException exception){
-        return "JWT expiré";
+    public Error handleExpiredJwtException(ExpiredJwtException exception){
+        return new Error("JWT expiré");
     }
 
     @ExceptionHandler(AuthenticationException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public String handleException(AuthenticationException exception){
-        return "Mauvais email/mot de passe";
+    public Error handleException(AuthenticationException exception){
+        return new Error("Mauvais email/mot de passe");
     }
 
     @ExceptionHandler(BadCredentialsException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public String handleException(BadCredentialsException exception){
-        return "Mot de passe incorrect";
+    public Error handleException(BadCredentialsException exception){
+        return new Error("Mot de passe incorrect");
     }
 
     @ExceptionHandler(EmailAlreadyExistException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String handleEmailAlreadyExistException(EmailAlreadyExistException exception){return exception.getMessage();}
+    public Error handleEmailAlreadyExistException(EmailAlreadyExistException exception){return new Error(exception.getMessage());}
 }

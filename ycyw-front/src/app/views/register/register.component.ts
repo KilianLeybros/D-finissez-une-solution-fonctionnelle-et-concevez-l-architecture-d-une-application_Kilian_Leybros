@@ -1,6 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { RegisterForm } from 'app/shared/interfaces';
+import { AuthService } from 'app/shared/services/auth.service';
 
 @Component({
   imports: [ReactiveFormsModule, RouterLink],
@@ -23,20 +25,20 @@ import { RouterLink } from '@angular/router';
         </div>
         <div class="flex flex-row gap-12">
           <div class="flex flex-col">
-            <label for="firstname" class="text-sm my-2">Prénom</label>
+            <label for="firstName" class="text-sm my-2">Prénom</label>
             <input
               class="w-full"
-              id="firstname"
+              id="firstName"
               type="text"
-              formControlName="firstname"
+              formControlName="firstName"
             />
-            @let firstname = registerForm.get('firstname');
-            @if(firstname?.errors && registerForm.touched){
+            @let firstName = registerForm.get('firstName');
+            @if(firstName?.errors && (registerForm.touched && formSubmitted())){
             <div class="validation-summary">
               <ul>
-                @if(firstname?.hasError('required')){
+                @if(firstName?.hasError('required')){
                 <li>Votre prénom est obligatoire</li>
-                } @else if(firstname?.hasError('maxlength')){
+                } @else if(firstName?.hasError('maxlength')){
                 <li>Votre prénom est trop long</li>
                 }
               </ul>
@@ -44,20 +46,20 @@ import { RouterLink } from '@angular/router';
             }
           </div>
           <div class="flex flex-col">
-            <label for="lastname" class="text-sm my-2">Nom</label>
+            <label for="lastName" class="text-sm my-2">Nom</label>
             <input
               class="w-full"
-              id="lastname"
+              id="lastName"
               type="text"
-              formControlName="lastname"
+              formControlName="lastName"
             />
-            @let lastname = registerForm.get('lastname'); @if(lastname?.errors
-            && registerForm.touched){
+            @let lastName = registerForm.get('lastName'); @if(lastName?.errors
+            && (registerForm.touched && formSubmitted())){
             <div class="validation-summary">
               <ul>
-                @if(lastname?.hasError('required')){
+                @if(lastName?.hasError('required')){
                 <li>Votre nom est obligatoire</li>
-                } @else if(lastname?.hasError('maxlength')){
+                } @else if(lastName?.hasError('maxlength')){
                 <li>Votre nom est trop long</li>
                 }
               </ul>
@@ -69,7 +71,7 @@ import { RouterLink } from '@angular/router';
           <label for="email" class="text-sm my-2">Email</label>
           <input id="email" type="email" formControlName="email" />
           @let email = registerForm.get('email'); @if(email?.errors &&
-          registerForm.touched){
+          (registerForm.touched && formSubmitted())){
           <div class="validation-summary">
             <ul>
               @if(email?.hasError('required')){
@@ -78,6 +80,8 @@ import { RouterLink } from '@angular/router';
               <li>Rentrez une adresse email valide</li>
               }@else if(email?.hasError('maxlength')){
               <li>Adresse email trop longue</li>
+              } @else if (email?.errors?.['emailAlreadyUsed']) {
+              <p class="error">Adresse email déjà utilisée</p>
               }
             </ul>
           </div>
@@ -87,7 +91,7 @@ import { RouterLink } from '@angular/router';
           <label for="password" class="text-sm my-2">Mot de passe</label>
           <input id="password" type="password" formControlName="password" />
           @let password = registerForm.get('password'); @if(password?.errors &&
-          registerForm.touched){
+          (registerForm.touched && formSubmitted())){
           <div class="validation-summary">
             <ul>
               @if(password?.hasError('required')){
@@ -104,15 +108,7 @@ import { RouterLink } from '@angular/router';
           </div>
           }
         </div>
-        <div class="validation-summary">
-          <ul>
-            @if(error()){
-            <li>
-              {{ error() }}
-            </li>
-            }
-          </ul>
-        </div>
+
         <div class="flex justify-content-center mt-20">
           <button type="submit" class="btn btn-primary">S'inscrire</button>
         </div>
@@ -131,34 +127,42 @@ import { RouterLink } from '@angular/router';
    `,
 })
 export class RegisterComponent {
-  fb = inject(FormBuilder);
-  error = signal<string | undefined>(undefined);
-  registerForm = this.fb.group(
-    {
-      firstname: ['', [Validators.required, Validators.maxLength(50)]],
-      lastname: ['', [Validators.required, Validators.maxLength(50)]],
-      email: [
-        '',
-        [Validators.required, Validators.email, Validators.maxLength(100)],
-      ],
-      password: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(8),
-          Validators.pattern(
-            '^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[#?!@$%^&*-])[A-Za-z0-9#?!@$%^&*-]{0,}$'
-          ),
-        ],
-      ],
-    },
-    { updateOn: 'submit' }
-  );
+  readonly fb = inject(FormBuilder);
+  readonly authService = inject(AuthService);
+  readonly router = inject(Router);
+  formSubmitted = signal(false);
 
-  submit() {
-    this.error.set(undefined);
-    this.registerForm.markAsTouched();
+  registerForm = this.fb.group({
+    firstName: ['', [Validators.required, Validators.maxLength(50)]],
+    lastName: ['', [Validators.required, Validators.maxLength(50)]],
+    email: [
+      '',
+      [Validators.required, Validators.email, Validators.maxLength(100)],
+    ],
+    password: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.pattern(
+          '^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[#?!@$%^&*-])[A-Za-z0-9#?!@$%^&*-]{0,}$'
+        ),
+      ],
+    ],
+  });
+
+  async submit() {
+    this.formSubmitted.set(true);
     if (this.registerForm.valid) {
+      const registerForm = this.registerForm.getRawValue() as RegisterForm;
+      try {
+        const user = await this.authService.register(registerForm);
+        this.router.navigateByUrl('/');
+      } catch (e: any) {
+        if (e.message === 'Adresse email déjà utilisée') {
+          this.registerForm.get('email')!.setErrors({ emailAlreadyUsed: true });
+        }
+      }
     }
   }
 }
