@@ -1,11 +1,9 @@
 package com.openclassrooms.ycyw_back.data.model;
 
-import com.openclassrooms.ycyw_back.data.enums.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.Accessors;
+
 
 @Entity
 @DiscriminatorValue("CUSTOMER")
