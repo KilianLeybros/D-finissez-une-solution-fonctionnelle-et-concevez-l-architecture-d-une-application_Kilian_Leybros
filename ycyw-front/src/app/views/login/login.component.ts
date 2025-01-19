@@ -1,6 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { LoginForm } from 'app/shared/interfaces/auth.interface';
+import { AuthService } from 'app/shared/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -28,12 +30,10 @@ import { RouterLink } from '@angular/router';
           <ul>
             @let email = loginForm.get('email'); @let password =
             loginForm.get('password'); @if((password!.errors || email!.errors)
-            && loginForm.touched){
+            && (loginForm.touched && formSubmitted())){
             <li>Veuillez rentrer vos identifiants</li>
-            } @if(error()){
-            <li>
-              {{ error() }}
-            </li>
+            } @if (loginForm.errors?.['general']) {
+            <li>Mot de passe ou email incorrect</li>
             }
           </ul>
         </div>
@@ -63,20 +63,27 @@ import { RouterLink } from '@angular/router';
   `,
 })
 export class LoginComponent {
-  fb = inject(FormBuilder);
+  readonly fb = inject(FormBuilder);
+  readonly authService = inject(AuthService);
+  readonly router = inject(Router);
+  formSubmitted = signal(false);
   error = signal<string | undefined>(undefined);
-  loginForm = this.fb.group(
-    {
-      email: ['', [Validators.required]],
-      password: ['', [Validators.required]],
-    },
-    { updateOn: 'submit' }
-  );
+  loginForm = this.fb.group({
+    email: ['', [Validators.required]],
+    password: ['', [Validators.required]],
+  });
 
-  submit() {
-    this.error.set(undefined);
-    this.loginForm.markAsTouched();
+  async submit() {
+    this.formSubmitted.set(true);
     if (this.loginForm.valid) {
+      const loginForm = this.loginForm.getRawValue() as LoginForm;
+      try {
+        const user = await this.authService.login(loginForm);
+        this.router.navigateByUrl('/');
+      } catch (e: any) {
+        console.log(e);
+        this.loginForm.setErrors({ general: true });
+      }
     }
   }
 }
