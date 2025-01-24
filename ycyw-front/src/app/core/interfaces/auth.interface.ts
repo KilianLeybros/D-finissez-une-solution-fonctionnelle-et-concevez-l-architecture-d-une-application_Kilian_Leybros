@@ -1,4 +1,4 @@
-import { Role } from '../utils/enums/role.enum';
+import { Role } from '../enums/role.enum';
 
 export interface User {
   id: string;
@@ -6,6 +6,7 @@ export interface User {
   fullName: string;
   role: Role;
   password: string;
+  supportRequestId?: string;
 }
 
 export interface LoginForm {

@@ -1,8 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { LoginForm } from 'app/shared/interfaces/auth.interface';
-import { AuthService } from 'app/shared/services/auth.service';
+import { LoginForm } from 'app/core/interfaces/auth.interface';
+import { AuthService } from 'app/core/services/auth.service';
 
 @Component({
   selector: 'app-login',

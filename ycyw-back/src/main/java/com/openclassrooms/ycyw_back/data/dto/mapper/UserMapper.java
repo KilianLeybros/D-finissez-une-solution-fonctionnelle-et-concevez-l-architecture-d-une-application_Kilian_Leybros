@@ -1,9 +1,8 @@
-package com.openclassrooms.ycyw_back.web.mapper;
+package com.openclassrooms.ycyw_back.data.dto.mapper;
 
 
 import com.openclassrooms.ycyw_back.data.model.Customer;
-import com.openclassrooms.ycyw_back.data.model.User;
-import com.openclassrooms.ycyw_back.web.dto.auth.RegisterInput;
+import com.openclassrooms.ycyw_back.data.dto.auth.RegisterInput;
 
 public class UserMapper {
 
