@@ -17,7 +17,7 @@ import javax.naming.AuthenticationException;
 public class AuthExceptionHandler {
 
     @ExceptionHandler(AccessDeniedException.class)
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
     public Error handleAccessDeniedException(AccessDeniedException exception){
         return new Error("Vous n'êtes pas authorisé");
     }
