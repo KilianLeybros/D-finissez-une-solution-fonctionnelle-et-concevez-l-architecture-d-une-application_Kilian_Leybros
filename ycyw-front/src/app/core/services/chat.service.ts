@@ -16,7 +16,7 @@ export class ChatService {
   selectedRequestId = computed(() => this.requestService.selectedRequestId());
 
   constructor() {
-    this.client = Stomp.client('ws://localhost:8080/ws');
+    this.client = Stomp.client('ws://localhost/ws');
     this.client.reconnect_delay = 5000;
     effect((onCleanup) => {
       const requestId = this.selectedRequestId();

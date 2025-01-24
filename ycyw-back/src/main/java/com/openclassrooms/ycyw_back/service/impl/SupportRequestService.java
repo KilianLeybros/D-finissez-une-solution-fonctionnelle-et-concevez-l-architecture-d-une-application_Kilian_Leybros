@@ -10,6 +10,7 @@ import com.openclassrooms.ycyw_back.data.dto.request.ChatResponse;
 import com.openclassrooms.ycyw_back.data.dto.request.SupportRequestResponse;
 import com.openclassrooms.ycyw_back.data.dto.mapper.SupportRequestMapper;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
@@ -29,10 +30,11 @@ public class SupportRequestService implements ISupportRequestService {
         return SupportRequestMapper.toListSupportRequestResponse(supportRequestRepository.findWithAtLeastOneMessage());
     }
 
+    @Transactional
     public ChatResponse findChatMessages(UUID id){
         User currentUser = authService.getCurrentUser();
         SupportRequest supportRequest = supportRequestRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        if(currentUser.getRole().equals(Role.CUSTOMER) && supportRequest.getCustomer().getId() != currentUser.getId()){
+        if(currentUser.getRole().equals(Role.CUSTOMER) && !supportRequest.getCustomer().getId().equals(currentUser.getId())){
             throw new AccessDeniedException("");
         }
         return SupportRequestMapper.toChatResponse(supportRequest, currentUser);
