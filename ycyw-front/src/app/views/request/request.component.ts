@@ -15,7 +15,6 @@ import { SupportRequestService } from 'app/core/services/support-request.service
       class="request-max-h w-half xs-w-full card"
     />
     <div class="request-max-h w-half xs-w-full flex">
-      <!--<app-chat [title]="'test'" />-->
       <router-outlet />
     </div>
   `,
