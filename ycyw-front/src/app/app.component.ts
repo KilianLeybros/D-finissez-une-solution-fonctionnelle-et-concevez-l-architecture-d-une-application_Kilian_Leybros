@@ -3,8 +3,8 @@ import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header.component';
 import { FooterComponent } from './components/footer.component';
 import { CustomerChatComponent } from './components/customer-chat.component';
-import { AuthService } from './core/services/auth.service';
-import { Role } from './core/enums/role.enum';
+import { AuthService } from './shared/services/auth.service';
+import { Role } from './shared/utils/enums/role.enum';
 
 @Component({
   selector: 'app-root',
@@ -18,8 +18,8 @@ import { Role } from './core/enums/role.enum';
     <app-header />
     <div class="flex-auto flex flex-col">
       <router-outlet />
-      @if(currentUser()?.role === roles.CUSTOMER){
-      <app-customer-chat [user]="currentUser()!" />
+      @if(currentUserRole() === roles.CUSTOMER){
+      <app-customer-chat />
       }
     </div>
     <app-footer />
@@ -36,5 +36,4 @@ export class AppComponent {
   readonly authService = inject(AuthService);
   readonly roles = Role;
   currentUserRole = this.authService.currentUserRole;
-  currentUser = this.authService.currentUser;
 }

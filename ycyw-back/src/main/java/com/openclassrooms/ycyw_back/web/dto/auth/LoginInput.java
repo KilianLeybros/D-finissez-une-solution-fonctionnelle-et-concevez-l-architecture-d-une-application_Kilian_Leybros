@@ -1,4 +1,4 @@
-package com.openclassrooms.ycyw_back.data.dto.auth;
+package com.openclassrooms.ycyw_back.web.dto.auth;
 
 import jakarta.validation.constraints.NotBlank;
 

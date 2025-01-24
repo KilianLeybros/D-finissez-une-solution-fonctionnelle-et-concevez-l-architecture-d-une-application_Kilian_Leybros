@@ -1,7 +1,7 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { AuthService } from 'app/core/services/auth.service';
-import { Role } from 'app/core/enums/role.enum';
+import { AuthService } from 'app/shared/services/auth.service';
+import { Role } from 'app/shared/utils/enums/role.enum';
 
 @Component({
   selector: 'app-header',
@@ -17,7 +17,7 @@ import { Role } from 'app/core/enums/role.enum';
       <li>
         <a (click)="logout()">se déconnecter</a>
       </li>
-      } @else if (isLoggedin() === false) {
+      } @else if (isLoggedin() === undefined) {
       <li>
         <a routerLink="/login">connexion</a>
       </li>

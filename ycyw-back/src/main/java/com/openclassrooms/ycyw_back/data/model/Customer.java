@@ -16,7 +16,6 @@ public class Customer extends User {
         super(email, password);
         this.firstName = firstName;
         this.lastName = lastName;
-        this.supportRequest = new SupportRequest().setCustomer(this);
     }
 
     @Column(name="first_name")
@@ -24,9 +23,6 @@ public class Customer extends User {
 
     @Column(name="last_name")
     private String lastName;
-
-    @OneToOne(mappedBy = "customer", cascade = CascadeType.PERSIST)
-    private SupportRequest supportRequest;
 
     @Override
     public String getFullName(){

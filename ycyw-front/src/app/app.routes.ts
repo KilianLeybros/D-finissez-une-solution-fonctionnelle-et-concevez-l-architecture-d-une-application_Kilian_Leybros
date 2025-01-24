@@ -3,8 +3,8 @@ import { HomeComponent } from './views/home/home.component';
 import { NotFoundComponent } from './views/not-found.component';
 import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
-import { authGuard } from './core/guards/auth.guard';
-import { adminGuard } from './core/guards/admin.guard';
+import { authGuard } from './shared/guards/auth.guard';
+import { adminGuard } from './shared/guards/admin.guard';
 
 export const routes: Routes = [
   {
@@ -17,7 +17,7 @@ export const routes: Routes = [
     loadComponent: async () =>
       (await import('./views/request/request.component')).RequestComponent,
     loadChildren: async () =>
-      (await import('./views/request/requests.routes')).routes,
+      (await import('./shared/routes/requests.routes')).routes,
   },
   {
     path: 'login',
