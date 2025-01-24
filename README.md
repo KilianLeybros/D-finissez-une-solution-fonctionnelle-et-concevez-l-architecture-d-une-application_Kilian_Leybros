@@ -19,6 +19,7 @@ Git clone : [https://github.com/KilianLeybros/D-finissez-une-solution-fonctionne
 - Rendez-vous sur [http://localhost/](http://localhost/)
 
 - Un compte de service client est créé par défaut, car il n'est pas possible d'en créer un via l'interface :
+  
 Email : admin@test.com
 Mot de passe : Azerty123$
 
