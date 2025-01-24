@@ -30,6 +30,8 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-websocket")
 	implementation("org.springframework.boot:spring-boot-starter-validation:3.4.1")
 	implementation("io.jsonwebtoken:jjwt:0.12.6")
+	implementation("org.flywaydb:flyway-core:11.2.0")
+	runtimeOnly("org.flywaydb:flyway-database-postgresql:11.2.0")
 	compileOnly("org.projectlombok:lombok")
 	runtimeOnly("org.postgresql:postgresql")
 	annotationProcessor("org.projectlombok:lombok")
