@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, effect, input, signal } from '@angular/core';
 import { ChatComponent } from '../shared/components/chat.component';
+import { User } from 'app/core/interfaces';
 
 @Component({
   selector: 'app-customer-chat',
@@ -12,7 +13,10 @@ import { ChatComponent } from '../shared/components/chat.component';
     right: 0px;"
     >
       <div class="flex flex-auto" style="width: 300px; height: 400px">
-        <app-chat [title]="'Service client'" />
+        <app-chat
+          [customerRequest]="user().supportRequestId"
+          [title]="'Service client'"
+        />
       </div>
     </div>
     }
@@ -33,7 +37,7 @@ import { ChatComponent } from '../shared/components/chat.component';
       bottom: 60px;
       right: 35px;
     }
-   
+
     button{
       height: 60px;
       width:60px;
@@ -42,4 +46,5 @@ import { ChatComponent } from '../shared/components/chat.component';
 })
 export class CustomerChatComponent {
   isChatOpen = signal(false);
+  user = input.required<User>();
 }
