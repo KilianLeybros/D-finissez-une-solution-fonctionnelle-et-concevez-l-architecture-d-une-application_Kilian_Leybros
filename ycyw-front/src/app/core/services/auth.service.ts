@@ -57,8 +57,14 @@ export class AuthService {
     }
   }
 
-  async fetchCurrentUser(): Promise<User> {
-    return (await fetch(`${API_AUTH}/authenticated`)).json();
+  async fetchCurrentUser() {
+    const response = await fetch(`${API_AUTH}/authenticated`);
+    if (response.ok && response.status === 200) {
+      const data = await response.json();
+      return Promise.resolve(data);
+    } else {
+      return Promise.resolve(null);
+    }
   }
 
   async logout() {

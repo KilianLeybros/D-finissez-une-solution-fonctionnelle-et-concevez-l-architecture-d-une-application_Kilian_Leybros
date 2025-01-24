@@ -1,7 +1,7 @@
 package com.openclassrooms.ycyw_back.data.model;
 
 
-import com.openclassrooms.ycyw_back.data.enums.Role;
+import com.openclassrooms.ycyw_back.data.utils.enums.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,6 +10,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -41,6 +42,9 @@ public abstract class User {
     @Column(name="role", insertable = false, updatable = false, nullable = false)
     private Role role;
 
+    @OneToMany(mappedBy = "sender")
+    private Set<Message> messages;
+
     @CreationTimestamp
     @Column(name="created_at")
     private LocalDateTime createdAt;
@@ -50,5 +54,10 @@ public abstract class User {
     private LocalDateTime updatedAt;
 
     public abstract String getFullName();
+
+
+    public boolean isAdmin(){
+        return this.getRole() == Role.ADMIN;
+    }
 
 }

@@ -39,7 +39,8 @@ public class SpringSecurityConfig {
         return http.csrf(CsrfConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/api/auth/**").permitAll();
-                    auth.requestMatchers("/api/**").authenticated();
+                    auth.requestMatchers("/ws/**").permitAll();
+                    auth.anyRequest().authenticated();
                 })
                 .logout(logout -> {
                     logout.logoutUrl("/api/auth/logout")

@@ -1,6 +1,6 @@
 package com.openclassrooms.ycyw_back.data.model;
 
-import com.openclassrooms.ycyw_back.data.enums.Role;
+import com.openclassrooms.ycyw_back.data.utils.enums.Role;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.Getter;

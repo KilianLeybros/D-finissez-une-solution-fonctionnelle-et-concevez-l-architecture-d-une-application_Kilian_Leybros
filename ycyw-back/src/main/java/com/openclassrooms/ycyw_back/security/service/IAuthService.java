@@ -2,8 +2,8 @@ package com.openclassrooms.ycyw_back.security.service;
 
 import com.openclassrooms.ycyw_back.data.model.Customer;
 import com.openclassrooms.ycyw_back.data.model.User;
-import com.openclassrooms.ycyw_back.web.dto.auth.LoginInput;
-import com.openclassrooms.ycyw_back.web.dto.auth.RegisterInput;
+import com.openclassrooms.ycyw_back.data.dto.auth.LoginInput;
+import com.openclassrooms.ycyw_back.data.dto.auth.RegisterInput;
 import jakarta.servlet.http.HttpServletResponse;
 
 public interface IAuthService {

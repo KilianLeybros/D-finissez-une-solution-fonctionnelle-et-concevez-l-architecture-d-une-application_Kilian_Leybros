@@ -1,8 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { RegisterForm } from 'app/shared/interfaces';
-import { AuthService } from 'app/shared/services/auth.service';
+import { RegisterForm } from 'app/core/interfaces';
+import { AuthService } from 'app/core/services/auth.service';
 
 @Component({
   imports: [ReactiveFormsModule, RouterLink],
